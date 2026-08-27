@@ -1,0 +1,22 @@
+@import '../../variables.scss';
+@import '../../mixins.scss';
+
+.header {
+  height: $header-height;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  padding-left: 16px;
+  border-bottom: 1px solid #e2e6e9;
+  background-color: $color-white;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  @include respond-to('desktop') {
+    padding-left: 24px;
+    gap: 48px;
+  }
+}

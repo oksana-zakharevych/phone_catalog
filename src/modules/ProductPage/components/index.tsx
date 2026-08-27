@@ -1,0 +1,1 @@
+import * from '../../components/PhonesPage/Phones';

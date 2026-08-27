@@ -1,0 +1,9 @@
+@import 'variables.scss';
+
+@mixin respond-to($breakpoint) {
+  $width: map-get($breakpoints, $breakpoint);
+
+  @media (min-width: $width) {
+    @content;
+  }
+}
