@@ -1,5 +1,5 @@
 import type React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App.tsx';
 import { HomePage } from './modules/HomePage/components/HomePage.tsx';
 import { ProductPage } from './modules/ProductPage/components/ProductPage.tsx';
@@ -13,6 +13,7 @@ export const Root: React.FC = () => {
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
+          <Route path="home" element={<Navigate to="/" replace />} />
           <Route path="phones" element={<ProductPage />} />
           <Route path="tablets" element={<ProductPage />} />
           <Route path="accessories" element={<ProductPage />} />

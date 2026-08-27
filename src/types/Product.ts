@@ -1,8 +1,9 @@
-import type { PhoneDescription } from './PhoneDescription';
+import type { ProductCategories } from './ProductCategories';
+import type { ProductDescription } from './ProductDescription';
 
-export interface Phone {
+export interface Product {
   id: string;
-  category: string;
+  category: ProductCategories;
   namespaceId: string;
   name: string;
   capacityAvailable: string[];
@@ -12,12 +13,12 @@ export interface Phone {
   colorsAvailable: string[];
   color: string;
   images: string[];
-  description: PhoneDescription[];
+  description: ProductDescription[];
   screen: string;
   resolution: string;
   processor: string;
   ram: string;
-  camera: string;
-  zoom: string;
+  camera?: string;
+  zoom?: string;
   cell: string[];
 }

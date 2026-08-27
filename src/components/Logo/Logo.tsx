@@ -1,5 +1,4 @@
 import { LogoSize } from '../../types/LogoSize';
-import styles from './Logo.module.scss';
 
 type Props = {
   size: LogoSize;
@@ -14,12 +13,5 @@ export const Logo: React.FC<Props> = ({ size }) => {
 
   const widthValue = sizesMap[size] || sizesMap[LogoSize.Medium];
 
-  return (
-    <img
-      src="/images/Logo.svg"
-      alt="Nice Gadgets"
-      className={styles.logo}
-      style={{ width: `${widthValue}px` }}
-    />
-  );
+  return <img src="/images/Logo.svg" alt="Nice Gadgets" style={{ width: `${widthValue}px` }} />;
 };

@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import styles from './NavigationMobile.module.scss';
 import { useEffect } from 'react';
+import { NAV_ICONS, NAV_LINKS } from '../../modules/shared/constants';
 
 const getLinkClassName = (baseClass: string) => {
   return ({ isActive }: { isActive: boolean }) => {
@@ -41,54 +42,30 @@ export const NavigationMobile: React.FC<Props> = ({ isNavOpen, setIsNavOpen }) =
       })}
     >
       <ul className={styles['nav-links']}>
-        <li>
-          <NavLink to={'/home'} className={getLinkClassName('nav-link')} onClick={handleLinkClick}>
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to={'/phones'}
-            className={getLinkClassName('nav-link')}
-            onClick={handleLinkClick}
-          >
-            Phone
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to={'/tablets'}
-            className={getLinkClassName('nav-link')}
-            onClick={handleLinkClick}
-          >
-            Tablets
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to={'/accessories'}
-            className={getLinkClassName('nav-link')}
-            onClick={handleLinkClick}
-          >
-            Accessories
-          </NavLink>
-        </li>
+        {NAV_LINKS.map((link) => (
+          <li className={styles['nav-link-wrapper']} key={link.label}>
+            <NavLink
+              to={link.to}
+              className={getLinkClassName('nav-link')}
+              onClick={handleLinkClick}
+            >
+              {link.label}
+            </NavLink>
+          </li>
+        ))}
       </ul>
       <ul className={styles['nav-icons']}>
-        <li className={styles['nav-icon-wrapper']}>
-          <NavLink
-            to={'/favorites'}
-            className={getLinkClassName('nav-icon')}
-            onClick={handleLinkClick}
-          >
-            <img src="/images/Favorites.svg" alt="Favorites" />
-          </NavLink>
-        </li>
-        <li className={styles['nav-icon-wrapper']}>
-          <NavLink to={'/cart'} className={getLinkClassName('nav-icon')} onClick={handleLinkClick}>
-            <img src="/images/Cart.svg" alt="Cart" />
-          </NavLink>
-        </li>
+        {NAV_ICONS.map((icon) => (
+          <li className={styles['nav-icon-wrapper']} key={icon.label}>
+            <NavLink
+              to={icon.to}
+              className={getLinkClassName('nav-icon')}
+              onClick={handleLinkClick}
+            >
+              <img src={`/images/${icon.label}.svg`} alt={`${icon.label}`} />
+            </NavLink>
+          </li>
+        ))}
       </ul>
     </nav>
   );

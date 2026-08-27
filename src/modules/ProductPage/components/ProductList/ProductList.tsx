@@ -1,10 +1,10 @@
-import type { Phone } from '../../../../types/Phone';
+import type { Product } from '../../../../types/Product';
 import { ProductCard } from '../../../shared/components/ProductCard';
 
 import styles from './ProductList.module.scss';
 
 type Props = {
-  products: Phone[] | Tablet[] | Accessories[];
+  products: Product[];
 };
 
 export const ProductList: React.FC<Props> = ({ products }) => {

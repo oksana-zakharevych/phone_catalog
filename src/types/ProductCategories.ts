@@ -1,0 +1,1 @@
+export type ProductCategories = 'phone' | 'tablet' | 'accessorize';

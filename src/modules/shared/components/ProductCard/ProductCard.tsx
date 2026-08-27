@@ -1,8 +1,8 @@
-import type { Phone } from '../../types/Phone';
+import type { Product } from '../../../../types/Product';
 import styles from './ProductCard.module.scss';
 
 type Props = {
-  product: Phone | Tablet | Accessory;
+  product: Product;
 };
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
