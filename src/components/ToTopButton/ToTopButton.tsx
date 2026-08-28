@@ -11,7 +11,7 @@ export const ToTopButton: React.FC = () => {
     <div className={styles['top-button']}>
       <span className={styles.text}>Back to top</span>
       <button onClick={scrollToTop}>
-        <img src={asset('/images/TopButton.svg')} alt="" />
+        <img src={asset('/img/TopButton.svg')} alt="" />
       </button>
     </div>
   );

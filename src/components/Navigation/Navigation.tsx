@@ -27,7 +27,7 @@ export const Navigation: React.FC = () => {
         {NAV_ICONS.map((icon) => (
           <li className={styles['nav-icon-wrapper']} key={icon.label}>
             <NavLink to={icon.to} className={getLinkClassName('nav-icon')}>
-              <img src={asset(`/images/${icon.label}.svg`)} alt={`${icon.label}`} />
+              <img src={asset(`/img/${icon.label}.svg`)} alt={`${icon.label}`} />
             </NavLink>
           </li>
         ))}

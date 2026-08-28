@@ -62,7 +62,7 @@ export const NavigationMobile: React.FC<Props> = ({ isNavOpen, setIsNavOpen }) =
               className={getLinkClassName('nav-icon')}
               onClick={handleLinkClick}
             >
-              <img src={asset(`/images/${icon.label}.svg`)} alt={`${icon.label}`} />
+              <img src={asset(`/img/${icon.label}.svg`)} alt={`${icon.label}`} />
             </NavLink>
           </li>
         ))}

@@ -16,6 +16,6 @@ export const Logo: React.FC<Props> = ({ size }) => {
   const widthValue = sizesMap[size] || sizesMap['medium'];
 
   return (
-    <img src={asset('/images/Logo.svg')} alt="Nice Gadgets" style={{ width: `${widthValue}px` }} />
+    <img src={asset('/img/Logo.svg')} alt="Nice Gadgets" style={{ width: `${widthValue}px` }} />
   );
 };
