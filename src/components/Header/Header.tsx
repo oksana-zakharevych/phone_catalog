@@ -4,7 +4,6 @@ import { Logo } from '../Logo';
 import { Navigation } from '../Navigation';
 import styles from './Header.module.scss';
 import { NavigationMobile } from '../NavigationMobile';
-import { LogoSize } from '../../types/LogoSize';
 
 export const Header = () => {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
@@ -24,13 +23,13 @@ export const Header = () => {
     <div className={styles.header}>
       {isMobile ? (
         <>
-          <Logo size={LogoSize.Small} />
+          <Logo size={'small'} />
           <NavigationButton isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
           <NavigationMobile isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
         </>
       ) : (
         <>
-          <Logo size={LogoSize.Medium} />
+          <Logo size={'medium'} />
           <Navigation />
         </>
       )}

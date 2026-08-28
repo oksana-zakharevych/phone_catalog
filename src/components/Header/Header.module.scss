@@ -16,6 +16,7 @@
   z-index: 100;
 
   @include respond-to('desktop') {
+    height: $header-height-desktop;
     padding-left: 24px;
     gap: 48px;
   }

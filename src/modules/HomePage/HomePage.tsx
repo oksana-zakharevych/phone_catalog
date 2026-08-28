@@ -1,4 +1,4 @@
-import { PicturesSlider } from './PicturesSlider';
+import { PicturesSlider } from './components/PicturesSlider';
 
 export const HomePage = () => {
   return (

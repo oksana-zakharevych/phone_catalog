@@ -1,12 +1,12 @@
 import { useEffect, useState, useMemo } from 'react';
-import { ProductList } from './ProductList/ProductList.tsx';
-import { DropdownSelect } from './DropdownSelect/DropdownSelect.tsx';
-import { ITEMS_PER_PAGE_OPTIONS, SORT_OPTIONS } from '../../../constants.ts';
+import { ProductList } from './components/ProductList';
+import { DropdownSelect } from './components/DropdownSelect';
+import { ITEMS_PER_PAGE_OPTIONS, SORT_OPTIONS } from '../shared/constants.ts';
 import { useSearchParams } from 'react-router-dom';
 
 import styles from './ProductPage.module.scss';
-import { Loader } from '../../shared/components/Loader/Loader.tsx';
-import { getProductsByCategory } from '../../../services/services.ts';
+import { Loader } from '../shared/components/Loader';
+import { getProductsByCategory } from '../../services/services.ts';
 
 export const ProductPage = () => {
   const [phones, setPhones] = useState([]);
@@ -66,21 +66,7 @@ export const ProductPage = () => {
     setSearchParams(params);
   };
 
-  const sortedPhones = useMemo(() => {
-    const phonesCopy = [...phones];
-
-    switch (sortBy) {
-      case 'Newest':
-        return phonesCopy.sort((a, b) => b.year - a.year);
-      case 'Alphabetically':
-        return phonesCopy.sort((a, b) => a.name.localeCompare(b.name));
-      case 'Cheapest':
-        return phonesCopy.sort((a, b) => a.priceDiscount - b.priceDiscount);
-      default:
-        return phonesCopy;
-    }
-  }, [phones, sortBy]);
-
+  const sortedPhones = [...phones];
   const totalPhones = sortedPhones.length;
   const computedPerPage = perPage === 'all' ? totalPhones : Number(perPage);
   const totalPages = perPage === 'all' ? 1 : Math.ceil(totalPhones / computedPerPage);

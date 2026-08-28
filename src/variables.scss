@@ -1,17 +1,16 @@
 // sizes
 $header-height: 48px;
+$header-height-desktop: 64px;
 $header-icon-size: $header-height;
-
+$header-icon-size-desktop: $header-height-desktop;
 
 // colors
 $color-primary: #313237;
 $color-secondary: #89939a;
 $color-white: #fff;
 
-
 // breakpoints
 $breakpoints: (
   'tablet': 640px,
-  'desktop': 1024px,
+  'desktop': 1200px,
 );
-

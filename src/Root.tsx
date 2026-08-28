@@ -1,10 +1,10 @@
 import type React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import App from './App.tsx';
-import { HomePage } from './modules/HomePage/components/HomePage.tsx';
-import { ProductPage } from './modules/ProductPage/components/ProductPage.tsx';
-import { NotFoundPage } from './modules/NotFoundPage/NotFoundPage.tsx';
-import { FavoritesPage } from './modules/FavoritesPage/FavoritesPage.tsx';
+import { HomePage } from './modules/HomePage';
+import { ProductPage } from './modules/ProductPage';
+import { NotFoundPage } from './modules/NotFoundPage';
+import { FavoritesPage } from './modules/FavoritesPage';
 import { CartPage } from './modules/CartPage/CartPage.tsx';
 
 export const Root: React.FC = () => {
@@ -13,7 +13,6 @@ export const Root: React.FC = () => {
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
-          <Route path="home" element={<Navigate to="/" replace />} />
           <Route path="phones" element={<ProductPage />} />
           <Route path="tablets" element={<ProductPage />} />
           <Route path="accessories" element={<ProductPage />} />
