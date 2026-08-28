@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
-
 import styles from './NavigationMobile.module.scss';
 import React, { useEffect } from 'react';
 import { NAV_ICONS, NAV_LINKS } from '../../modules/shared/constants';
+import { asset } from '../../helper';
 
 const getLinkClassName = (baseClass: string) => {
   return ({ isActive }: { isActive: boolean }) => {
@@ -62,7 +62,7 @@ export const NavigationMobile: React.FC<Props> = ({ isNavOpen, setIsNavOpen }) =
               className={getLinkClassName('nav-icon')}
               onClick={handleLinkClick}
             >
-              <img src={`/images/${icon.label}.svg`} alt={`${icon.label}`} />
+              <img src={asset(`/images/${icon.label}.svg`)} alt={`${icon.label}`} />
             </NavLink>
           </li>
         ))}

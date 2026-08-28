@@ -1,3 +1,5 @@
+import { asset } from '../helper';
+
 const delay = (ms: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -11,5 +13,5 @@ const fetchDataWithDelay = (src: string, ms: number) => {
 };
 
 export const getProductsByCategory = (category: string) => {
-  return fetchDataWithDelay(`/api/${category}.json`, 500);
+  return fetchDataWithDelay(asset(`/api/${category}.json`), 500);
 };

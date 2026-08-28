@@ -1,5 +1,6 @@
 import type React from 'react';
 import styles from './ToTopButton.module.scss';
+import { asset } from '../../helper';
 
 export const ToTopButton: React.FC = () => {
   const scrollToTop = () => {
@@ -10,7 +11,7 @@ export const ToTopButton: React.FC = () => {
     <div className={styles['top-button']}>
       <span className={styles.text}>Back to top</span>
       <button onClick={scrollToTop}>
-        <img src="/images/TopButton.svg" alt="" />
+        <img src={asset('/images/TopButton.svg')} alt="" />
       </button>
     </div>
   );

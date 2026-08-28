@@ -9,7 +9,7 @@ import { CartPage } from './modules/CartPage/CartPage.tsx';
 
 export const Root: React.FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />

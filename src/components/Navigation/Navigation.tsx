@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
-
 import styles from './Navigation.module.scss';
 import { NAV_ICONS, NAV_LINKS } from '../../modules/shared/constants';
 import type React from 'react';
+import { asset } from '../../helper';
 
 const getLinkClassName = (baseClass: string) => {
   return ({ isActive }: { isActive: boolean }) => {
@@ -27,7 +27,7 @@ export const Navigation: React.FC = () => {
         {NAV_ICONS.map((icon) => (
           <li className={styles['nav-icon-wrapper']} key={icon.label}>
             <NavLink to={icon.to} className={getLinkClassName('nav-icon')}>
-              <img src={`/images/${icon.label}.svg`} alt={`${icon.label}`} />
+              <img src={asset(`/images/${icon.label}.svg`)} alt={`${icon.label}`} />
             </NavLink>
           </li>
         ))}
