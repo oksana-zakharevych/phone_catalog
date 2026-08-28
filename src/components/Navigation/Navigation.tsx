@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import styles from './Navigation.module.scss';
 import { NAV_ICONS, NAV_LINKS } from '../../modules/shared/constants';
+import type React from 'react';
 
 const getLinkClassName = (baseClass: string) => {
   return ({ isActive }: { isActive: boolean }) => {

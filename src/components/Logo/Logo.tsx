@@ -1,3 +1,4 @@
+import type React from 'react';
 import type { LogoSize } from '../../types/LogoSize';
 
 type Props = {

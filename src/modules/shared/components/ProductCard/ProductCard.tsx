@@ -1,3 +1,4 @@
+import type React from 'react';
 import type { Product } from '../../../../types/Product';
 import styles from './ProductCard.module.scss';
 

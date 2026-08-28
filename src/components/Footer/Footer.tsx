@@ -1,3 +1,4 @@
+import type React from 'react';
 import { FooterLinks } from '../FooterLinks';
 import { Logo } from '../Logo';
 import { ToTopButton } from '../ToTopButton/ToTopButton';

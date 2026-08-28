@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import styles from './NavigationMobile.module.scss';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NAV_ICONS, NAV_LINKS } from '../../modules/shared/constants';
 
 const getLinkClassName = (baseClass: string) => {

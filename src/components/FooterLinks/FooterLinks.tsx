@@ -1,3 +1,4 @@
+import type React from 'react';
 import styles from './FooterLinks.module.scss';
 
 export const FooterLinks: React.FC = () => {
@@ -8,6 +9,7 @@ export const FooterLinks: React.FC = () => {
           href="https://github.com/oksana-zakharevych/react_phone-catalog"
           className={styles['footer-link']}
           target="_blank"
+          rel="noreferrer"
         >
           Github
         </a>

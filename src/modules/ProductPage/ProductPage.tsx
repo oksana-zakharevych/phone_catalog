@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { ProductList } from './components/ProductList';
 import { DropdownSelect } from './components/DropdownSelect';
 import { ITEMS_PER_PAGE_OPTIONS, SORT_OPTIONS } from '../shared/constants.ts';
@@ -8,7 +8,7 @@ import styles from './ProductPage.module.scss';
 import { Loader } from '../shared/components/Loader';
 import { getProductsByCategory } from '../../services/services.ts';
 
-export const ProductPage = () => {
+export const ProductPage: React.FC = () => {
   const [phones, setPhones] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasLoadingError, setHasLoadingError] = useState(false);

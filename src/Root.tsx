@@ -1,5 +1,5 @@
 import type React from 'react';
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.tsx';
 import { HomePage } from './modules/HomePage';
 import { ProductPage } from './modules/ProductPage';

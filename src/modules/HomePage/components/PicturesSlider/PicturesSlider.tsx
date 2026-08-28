@@ -1,8 +1,9 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import styles from './PicturesSlider.module.scss';
+import type React from 'react';
 
-export const PicturesSlider = () => {
+export const PicturesSlider: React.FC = () => {
   return (
     <div className={styles.sliderContainer}>
       <Swiper

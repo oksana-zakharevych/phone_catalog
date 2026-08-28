@@ -1,3 +1,4 @@
+import type React from 'react';
 import styles from './ToTopButton.module.scss';
 
 export const ToTopButton: React.FC = () => {
