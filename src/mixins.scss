@@ -8,3 +8,24 @@
     @content;
   }
 }
+
+@mixin button-base(
+  $bg-color: $color-primary,
+  $text-color: $color-white,
+  $hover-bg: $color-button-bg-hover
+) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $hover-bg;
+  }
+}

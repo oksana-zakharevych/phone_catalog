@@ -1,24 +1,35 @@
+@import '../../../../variables.scss';
+@import '../../../../mixins.scss';
+
 .card {
-  width: 272px;
-  background-color: #ffffff;
-  border: 1px solid #e2e6e9;
-  border-radius: 8px;
-  padding: 32px 24px 24px;
+  width: 100%;
+  padding: 32px;
+  border: 1px solid $color-border;
+  border-radius: 2px;
   display: flex;
   flex-direction: column;
   transition: box-shadow 0.3s ease;
 
   &:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 16px 0 $color-border;
+  }
+
+  @include respond-to('tablet-sm') {
+    width: calc((100% - $card-gap) / 2);
+  }
+  @include respond-to('tablet-md') {
+    width: calc((100% - (2 * $card-gap)) / 3);
+  }
+  @include respond-to('desktop') {
+    width: calc((100% - (3 * $card-gap)) / 4);
   }
 }
 
-.imageContainer {
+.image-wrapper {
   height: 196px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 24px;
 }
 
 .image {
@@ -28,96 +39,81 @@
 }
 
 .title {
+  height: 36px;
+  margin: 24px 0 16px;
   font-size: 14px;
   font-weight: 500;
   line-height: 21px;
-  color: #0f1111;
-  margin: 0 0 16px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  height: 42px;
 }
 
-.priceContainer {
+.prices {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  margin-bottom: 16px;
 }
 
-.priceDiscount {
+.price-discount {
   font-size: 22px;
   font-weight: 700;
-  line-height: 28px;
-  color: #0f1111;
 }
 
-.priceRegular {
+.price-regular {
   font-size: 14px;
   font-weight: 500;
-  line-height: 18px;
-  color: #89939a;
+  color: $color-secondary;
   text-decoration: line-through;
 }
 
 .divider {
   height: 1px;
-  background-color: #e2e6e9;
-  margin-bottom: 16px;
+  margin: 10px 0 15px;
+  background-color: $color-border;
 }
 
 .specifications {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 24px;
+  margin-bottom: 15px;
 }
 
-.specificationRow {
+.specification-row {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
   line-height: 15px;
+
+  &:last-child .specification-label {
+    text-transform: uppercase;
+  }
 }
 
-.specificationLabel {
-  color: #89939a;
+.specification-label {
+  color: $color-secondary;
+  text-transform: capitalize;
 }
 
-.specificationValue {
-  color: #0f1111;
+.specification-value {
+  color: $color-primary;
   font-weight: 500;
 }
 
 .actions {
   display: flex;
   gap: 8px;
+  height: 40px;
 }
 
-.addButton {
+.add-button {
+  @include button-base();
   flex: 1;
-  height: 40px;
-  background-color: #313237;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: #212225;
-  }
 }
 
-.favoriteButton {
+.favorite-button {
   width: 40px;
-  height: 40px;
+  height: 100%;
   background-color: transparent;
-  border: 1px solid #b4b5b9;
+  border: 1px solid $color-border;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -126,6 +122,6 @@
   transition: border-color 0.2s ease;
 
   &:hover {
-    border-color: #0f1111;
+    border-color: $color-primary;
   }
 }

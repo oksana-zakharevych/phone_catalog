@@ -1,6 +1,7 @@
-.productList {
+.product-list {
+  margin: 24px 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
+  justify-content: flex-start;
+  gap: 40px 16px;
 }

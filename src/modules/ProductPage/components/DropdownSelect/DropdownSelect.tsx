@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './DropdownSelect.module.scss';
+import { asset } from '../../../../helper';
 
 type Props = {
   options: (string | number)[];
   label?: string;
   className?: string;
-  value?: string | number;
+  value?: string | number | null;
   onChange?: (value: string | number) => void;
 };
 
@@ -17,8 +18,7 @@ export const DropdownSelect: React.FC<Props> = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [internalSelected, setInternalSelected] = useState(options.length > 0 ? options[0] : '');
-  const selected = value !== undefined ? value : internalSelected;
+  const selected = value ? value : options[0];
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -33,12 +33,7 @@ export const DropdownSelect: React.FC<Props> = ({
   }, []);
 
   const handleSelect = (option: string | number) => {
-    if (value === undefined) {
-      setInternalSelected(option);
-    }
-    if (onChange) {
-      onChange(option);
-    }
+    onChange?.(option);
     setIsOpen(false);
   };
 
@@ -53,23 +48,20 @@ export const DropdownSelect: React.FC<Props> = ({
           className={`${styles.button} ${isOpen ? styles.open : ''}`}
         >
           <span>{selected}</span>
-          <svg
+          <img
+            src={asset('img/arrow.svg')}
             className={`${styles.icon} ${isOpen ? styles.rotate : ''}`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-          </svg>
+            alt="Arrow"
+          />
         </button>
 
         {isOpen && (
-          <ul className={styles.menu}>
-            {options.map((option, index) => (
+          <ul className={styles.options}>
+            {options.map((option) => (
               <li
-                key={index}
+                key={option}
                 onClick={() => handleSelect(option)}
-                className={`${styles.item} ${selected === option ? styles.selected : ''}`}
+                className={`${styles.option} ${selected === option ? styles.selected : ''}`}
               >
                 {option}
               </li>

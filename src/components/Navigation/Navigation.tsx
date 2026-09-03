@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import styles from './Navigation.module.scss';
-import { NAV_ICONS, NAV_LINKS } from '../../modules/shared/constants';
+import { NAV_ICONS, NAV_LINKS } from '../../constants';
 import type React from 'react';
 import { asset } from '../../helper';
 
