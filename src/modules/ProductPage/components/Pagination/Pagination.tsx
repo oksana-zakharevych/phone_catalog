@@ -26,7 +26,7 @@ export const Pagination: React.FC<Props> = ({ currentPage, totalPages, onPageCha
         type="button"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        className={styles.arrowButton}
+        className={styles['arrow-button']}
       >
         &lt;
       </button>
@@ -36,7 +36,7 @@ export const Pagination: React.FC<Props> = ({ currentPage, totalPages, onPageCha
           key={page}
           type="button"
           onClick={() => onPageChange(page)}
-          className={`${styles.pageButton} ${page === currentPage ? styles.active : ''}`}
+          className={`${styles['page-button']} ${page === currentPage ? styles.active : ''}`}
         >
           {page}
         </button>
@@ -46,7 +46,7 @@ export const Pagination: React.FC<Props> = ({ currentPage, totalPages, onPageCha
         type="button"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        className={styles.arrowButton}
+        className={styles['arrow-button']}
       >
         &gt;
       </button>

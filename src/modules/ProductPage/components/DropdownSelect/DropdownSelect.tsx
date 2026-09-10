@@ -49,7 +49,7 @@ export const DropdownSelect: React.FC<Props> = ({
         >
           <span>{selected}</span>
           <img
-            src={asset('img/arrow.svg')}
+            src={asset('img/arrow-secondary.svg')}
             className={`${styles.icon} ${isOpen ? styles.rotate : ''}`}
             alt="Arrow"
           />

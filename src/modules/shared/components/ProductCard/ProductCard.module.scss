@@ -1,7 +1,7 @@
 @import '../../../../variables.scss';
 @import '../../../../mixins.scss';
 
-.card {
+.product-card {
   width: 100%;
   padding: 32px;
   border: 1px solid $color-border;
@@ -14,114 +14,39 @@
     box-shadow: 0 2px 16px 0 $color-border;
   }
 
-  @include respond-to('tablet-sm') {
-    width: calc((100% - $card-gap) / 2);
+  .link {
+    text-decoration: none;
+    color: inherit;
+
+    .image-wrapper {
+      height: 196px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .title {
+      height: 36px;
+      margin: 30px 0 10px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 21px;
+    }
   }
-  @include respond-to('tablet-md') {
-    width: calc((100% - (2 * $card-gap)) / 3);
+
+  .divider {
+    height: 1px;
+    margin: 10px 0;
+    background-color: $color-border;
   }
-  @include respond-to('desktop') {
-    width: calc((100% - (3 * $card-gap)) / 4);
-  }
-}
 
-.image-wrapper {
-  height: 196px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image {
-  max-height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-}
-
-.title {
-  height: 36px;
-  margin: 24px 0 16px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 21px;
-}
-
-.prices {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-
-.price-discount {
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.price-regular {
-  font-size: 14px;
-  font-weight: 500;
-  color: $color-secondary;
-  text-decoration: line-through;
-}
-
-.divider {
-  height: 1px;
-  margin: 10px 0 15px;
-  background-color: $color-border;
-}
-
-.specifications {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 15px;
-}
-
-.specification-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  line-height: 15px;
-
-  &:last-child .specification-label {
-    text-transform: uppercase;
-  }
-}
-
-.specification-label {
-  color: $color-secondary;
-  text-transform: capitalize;
-}
-
-.specification-value {
-  color: $color-primary;
-  font-weight: 500;
-}
-
-.actions {
-  display: flex;
-  gap: 8px;
-  height: 40px;
-}
-
-.add-button {
-  @include button-base();
-  flex: 1;
-}
-
-.favorite-button {
-  width: 40px;
-  height: 100%;
-  background-color: transparent;
-  border: 1px solid $color-border;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: border-color 0.2s ease;
-
-  &:hover {
-    border-color: $color-primary;
+  .specifications-panel {
+    margin: 8px 0 16px;
   }
 }

@@ -1,54 +1,42 @@
 import type React from 'react';
 import type { Product } from '../../../../types/Product';
 import styles from './ProductCard.module.scss';
-import { PRODUCT_SPECIFICATIONS } from '../../constants';
 import { asset } from '../../../../helper';
+import { Link } from 'react-router-dom';
+import { AddActions } from '../AddActions';
+import { Specifications } from '../Specifications';
+import { PRODUCT_SPECIFICATIONS_CARD } from '../../../../constants';
+import { Prices } from '../Prices';
 
 type Props = {
   product: Product;
+  classname?: string;
 };
 
-export const ProductCard: React.FC<Props> = ({ product }) => {
+export const ProductCard: React.FC<Props> = ({ product, classname }) => {
   const { name, images, priceRegular, priceDiscount } = product;
 
   return (
-    <div className={styles.card}>
-      <div className={styles['image-wrapper']}>
-        <img src={images[0]} alt={name} className={styles.image} />
-      </div>
+    <div className={`${styles['product-card']} ${classname}`}>
+      <Link to={`/${product.category}/${product.id}`} className={styles.link}>
+        <div className={styles['image-wrapper']}>
+          <img src={asset(images[0])} alt={name} className={styles.image} />
+        </div>
 
-      <h3 className={styles.title}>{name}</h3>
+        <h3 className={styles.title}>{name}</h3>
+      </Link>
 
-      <div className={styles.prices}>
-        {priceDiscount ? (
-          <>
-            <span className={styles['price-discount']}>${priceDiscount}</span>
-            <span className={styles['price-regular']}>${priceRegular}</span>
-          </>
-        ) : (
-          <span className={styles['price-regular']}>${priceRegular}</span>
-        )}
-      </div>
+      <Prices priceDiscount={priceDiscount} priceRegular={priceRegular} />
 
       <div className={styles.divider} />
 
-      <div className={styles.specifications}>
-        {PRODUCT_SPECIFICATIONS.map((spec) => (
-          <div className={styles['specification-row']} key={spec}>
-            <span className={styles['specification-label']}>{spec}</span>
-            <span className={styles['specification-value']}>{product[spec]}</span>
-          </div>
-        ))}
-      </div>
+      <Specifications
+        list={PRODUCT_SPECIFICATIONS_CARD}
+        product={product}
+        classnames={{ specificationsPanel: styles['specifications-panel'] }}
+      />
 
-      <div className={styles.actions}>
-        <button type="button" className={styles['add-button']}>
-          Add to cart
-        </button>
-        <button type="button" className={styles['favorite-button']}>
-          <img src={asset('/img/Favorites.svg')} />
-        </button>
-      </div>
+      <AddActions />
     </div>
   );
 };

@@ -23,7 +23,7 @@
     text-align: center;
   }
 
-  button {
+  .reload-button {
     @include button-base();
     width: 150px;
     height: 35px;

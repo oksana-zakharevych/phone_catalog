@@ -4,19 +4,12 @@ import { useSearchParams } from 'react-router-dom';
 import styles from './SearchField.module.scss';
 import { asset } from '../../../../helper';
 
-type Props = {
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-};
-
-export const SearchField: React.FC<Props> = ({ search, setSearch }) => {
+export const SearchField: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const search = searchParams.get('search') || '';
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-
-    setSearch(value);
-
     const params = new URLSearchParams(searchParams);
 
     if (value) {
@@ -29,8 +22,6 @@ export const SearchField: React.FC<Props> = ({ search, setSearch }) => {
   };
 
   const handleCancelSearch = () => {
-    setSearch('');
-
     const params = new URLSearchParams(searchParams);
     params.delete('search');
     setSearchParams(params);
@@ -44,13 +35,23 @@ export const SearchField: React.FC<Props> = ({ search, setSearch }) => {
         value={search}
         className={styles['search-field']}
         onChange={handleSearch}
+        placeholder="Search..."
       />
-      <img
-        src={asset('img/close-secondary.svg')}
-        className={styles.icon}
-        alt="Cancel"
-        onClick={handleCancelSearch}
-      />
+
+      {search && (
+        <button
+          type="button"
+          className={styles['cancel-button']}
+          onClick={handleCancelSearch}
+          aria-label="Cancel search"
+        >
+          <img
+            src={asset('img/close-secondary.svg')}
+            className={styles['cancel-icon']}
+            alt="Cancel"
+          />
+        </button>
+      )}
     </div>
   );
 };

@@ -1,21 +1,31 @@
+@import '../../../../variables.scss';
+@import '../../../../mixins.scss';
+
 .pagination {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin: 24px auto 64px;
+
+  @include respond-to('tablet-sm') {
+    margin: 40px auto 32px;
+  }
+
+  @include respond-to('tablet-md') {
+    margin: 40px auto 80px;
+  }
 }
 
-.pageButton,
-.arrowButton {
+.page-button,
+.arrow-button {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
-  border: 1px solid #b4bdc3; 
-  background-color: #ffffff;
+  border: 1px solid $color-border;
+  background-color: $color-white;
   color: #313237;
   font-family: inherit;
   font-size: 14px;
@@ -24,7 +34,7 @@
   padding: 0;
 
   &:hover:not(:disabled) {
-    border-color: #313237;
+    border-color: $color-border-hover;
   }
 
   &:disabled {
@@ -34,11 +44,11 @@
 }
 
 .active {
-  background-color: #313237;
-  color: #ffffff;
-  border-color: #313237;
+  background-color: $color-primary;
+  color: $color-white;
+  border-color: $color-primary;
 
   &:hover:not(:disabled) {
-    background-color: #313237;
+    background-color: $color-primary;
   }
 }

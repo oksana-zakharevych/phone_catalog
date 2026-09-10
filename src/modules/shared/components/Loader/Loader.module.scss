@@ -1,18 +1,24 @@
 @import '../../../../variables.scss';
 @import '../../../../animations.scss';
+@import '../../../../mixins.scss';
 
 .loaderContainer {
   position: absolute;
-  top: 40%;
+  top: 35%;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .spinner {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   border: 2px solid #f3f3f3;
   border-top: 2px solid $color-secondary;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+
+  @include respond-to('tablet-md') {
+    width: 42px;
+    height: 42px;
+  }
 }

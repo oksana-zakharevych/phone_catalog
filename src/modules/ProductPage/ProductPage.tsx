@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { ProductList } from './components/ProductList/';
 import { DropdownSelect } from './components/DropdownSelect';
 import { Loader } from '../shared/components/Loader';
@@ -18,150 +18,161 @@ import {
   PER_PAGE_OPTIONS_MAP,
   CATEGORY_TITLES,
 } from '../../constants';
+import type { ProductCategories } from '../../types/ProductCategories.ts';
+import { updateSearchParams } from '../../helper.ts';
+import { Breadcrumbs } from '../../components/Breadcrumbs/Breadcrumbs.tsx';
 
 export const ProductPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [hasLoadingError, setHasLoadingError] = useState(false);
-  const isSuccess = !isLoading && !hasLoadingError;
+  const [hasError, setHasError] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const sortBy = searchParams.get('sort') || SORT_OPTIONS[0];
+  const sortBy = searchParams.get('sort') || SORT_OPTIONS_MAP.Newest;
   const searchBy = searchParams.get('search') || '';
   const pageParam = searchParams.get('page');
   const perPageParam = searchParams.get('perPage');
   const currentPage = pageParam ? Number(pageParam) : 1;
   const perPage = perPageParam || PER_PAGE_OPTIONS_MAP.lg;
 
-  const location = useLocation();
-  const category = location.pathname.slice(1);
-  const title = CATEGORY_TITLES[category as keyof typeof CATEGORY_TITLES] || 'Products';
+  const { category } = useParams<{ category: string }>();
+  const isValidCategory = Boolean(category && category in CATEGORY_TITLES);
+  const currentCategory = category as ProductCategories;
+  const title = isValidCategory ? CATEGORY_TITLES[currentCategory] : '';
 
   const loadProducts = useCallback(() => {
     setIsLoading(true);
-    setHasLoadingError(false);
+    setHasError(false);
 
-    getProductsByCategory(category)
+    getProductsByCategory(currentCategory)
       .then((data) => setProducts(data))
-      .catch(() => setHasLoadingError(true))
+      .catch(() => setHasError(true))
       .finally(() => setIsLoading(false));
-  }, [category]);
+  }, [currentCategory]);
 
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
 
   const handleSortChange = (newSortBy: string | number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('sort', String(newSortBy));
-    setSearchParams(params);
+    updateSearchParams('sort', newSortBy, searchParams, setSearchParams, SORT_OPTIONS_MAP.Newest);
   };
 
   const handlePerPageChange = (newPerPage: string | number) => {
-    const params = new URLSearchParams(searchParams);
-    if (newPerPage === 'all') {
-      params.delete('perPage');
-    } else {
-      params.set('perPage', String(newPerPage));
-    }
-    params.delete('page');
-    setSearchParams(params);
+    updateSearchParams(
+      'perPage',
+      newPerPage,
+      searchParams,
+      setSearchParams,
+      PER_PAGE_OPTIONS_MAP.lg,
+    );
   };
 
   const handlePageChange = (newPage: number) => {
-    const params = new URLSearchParams(searchParams);
-    if (newPage === 1) {
-      params.delete('page');
-    } else {
-      params.set('page', String(newPage));
-    }
-    setSearchParams(params);
+    updateSearchParams('page', newPage, searchParams, setSearchParams, 1);
   };
 
-  const sortProducts = () => {
+  const visibleProducts = useMemo(() => {
     const productsCopy = [...products];
+
     switch (sortBy) {
       case SORT_OPTIONS_MAP.Newest:
-        return productsCopy;
+        productsCopy.sort((a, b) => (b.year || 0) - (a.year || 0));
+        break;
       case SORT_OPTIONS_MAP.Alphabetical:
-        return productsCopy.sort((a, b) => a.name.localeCompare(b.name));
+        productsCopy.sort((a, b) => a.name.localeCompare(b.name));
+        break;
       case SORT_OPTIONS_MAP.Cheapest:
-        return productsCopy.sort((a, b) => a.priceDiscount - b.priceDiscount);
+        productsCopy.sort((a, b) => (a.priceDiscount ?? 0) - (b.priceDiscount ?? 0));
+        break;
       case SORT_OPTIONS_MAP.MostExpensive:
-        return productsCopy.sort((a, b) => b.priceDiscount - a.priceDiscount);
+        productsCopy.sort((a, b) => (b.priceDiscount ?? 0) - (a.priceDiscount ?? 0));
+        break;
       default:
-        return productsCopy;
+        break;
     }
-  };
 
-  const sortedProducts = sortProducts();
-  const productsTotal = sortedProducts.length;
+    return productsCopy.filter((product) =>
+      product.name.toLowerCase().includes(searchBy.toLowerCase()),
+    );
+  }, [products, sortBy, searchBy]);
 
-  const [search, setSearch] = useState(searchBy);
+  const productsTotal = visibleProducts.length;
 
-  const visibleProducts = [...sortedProducts].filter((product) =>
-    product.name.toLocaleLowerCase().includes(searchBy.toLocaleLowerCase()),
-  );
+  const { paginatedProducts, totalPages, safeCurrentPage } = useMemo(() => {
+    let paginated = visibleProducts;
+    let total = 1;
+    let safePage = currentPage;
 
-  let paginatedProducts = visibleProducts;
-  let totalPages = 1;
-  let safeCurrentPage = currentPage;
+    if (perPage !== 'all') {
+      const perPageNum = Number(perPage);
+      total = Math.ceil(visibleProducts.length / perPageNum) || 1;
 
-  if (perPage !== 'all') {
-    const perPageNum = Number(perPage);
-    totalPages = Math.ceil(visibleProducts.length / perPageNum);
-    if (totalPages === 0) totalPages = 1;
+      safePage = Math.min(currentPage, total);
+      if (safePage < 1) safePage = 1;
 
-    safeCurrentPage = Math.min(currentPage, totalPages);
-    if (safeCurrentPage < 1) safeCurrentPage = 1;
+      const startIndex = (safePage - 1) * perPageNum;
+      paginated = visibleProducts.slice(startIndex, startIndex + perPageNum);
+    }
 
-    const startIndex = (safeCurrentPage - 1) * perPageNum;
-    paginatedProducts = visibleProducts.slice(startIndex, startIndex + perPageNum);
+    return {
+      paginatedProducts: paginated,
+      totalPages: total,
+      safeCurrentPage: safePage,
+    };
+  }, [visibleProducts, perPage, currentPage]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (hasError) {
+    return <ErrorLoading reloadAction={loadProducts} />;
+  }
+
+  if (products.length === 0) {
+    return <EmptyList category={currentCategory} />;
   }
 
   return (
     <>
-      {isLoading && <Loader />}
-      {hasLoadingError && <ErrorLoading />}
-      {isSuccess && products.length === 0 && <EmptyList category={category} />}
+      <Breadcrumbs />
 
-      {isSuccess && products.length > 0 && (
-        <>
-          <h1 className={styles.title}>{title}</h1>
-          <ProductsTotal productsTotal={productsTotal} />
-          <div className={styles.filters}>
-            <div className={styles['search-container']}>
-              <SearchField search={search} setSearch={setSearch} />
-            </div>
+      <h1 className={styles.title}>{title}</h1>
 
-            <div className={styles['dropdowns-container']}>
-              <DropdownSelect
-                options={SORT_OPTIONS}
-                label="Sort by"
-                className="sort-dropdown"
-                value={sortBy}
-                onChange={handleSortChange}
-              />
-              <DropdownSelect
-                options={PER_PAGE_OPTIONS}
-                label="Items on page"
-                className="per-page-dropdown"
-                value={perPage}
-                onChange={handlePerPageChange}
-              />
-            </div>
-          </div>
+      <ProductsTotal productsTotal={productsTotal} />
 
-          <ProductList products={paginatedProducts} />
+      <div className={styles.filters}>
+        <div className={styles['search-container']}>
+          <SearchField />
+        </div>
 
-          {totalPages > 1 && (
-            <Pagination
-              currentPage={safeCurrentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          )}
-        </>
+        <div className={styles['dropdowns-container']}>
+          <DropdownSelect
+            options={SORT_OPTIONS}
+            label="Sort by"
+            className="sort-dropdown"
+            value={sortBy}
+            onChange={handleSortChange}
+          />
+          <DropdownSelect
+            options={PER_PAGE_OPTIONS}
+            label="Items on page"
+            className="per-page-dropdown"
+            value={perPage}
+            onChange={handlePerPageChange}
+          />
+        </div>
+      </div>
+
+      <ProductList products={paginatedProducts} category={currentCategory} />
+
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={safeCurrentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       )}
     </>
   );

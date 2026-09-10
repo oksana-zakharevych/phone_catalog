@@ -36,5 +36,20 @@
     font-size: 14px;
     color: $color-primary;
     cursor: pointer;
+
+    &::placeholder {
+      font-size: 12px;
+      color: $color-secondary;
+    }
+  }
+
+  .cancel-button {
+    width: 20px;
+    cursor: pointer;
+    background: $color-white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
