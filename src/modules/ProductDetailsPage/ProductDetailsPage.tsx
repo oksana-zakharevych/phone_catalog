@@ -1,14 +1,12 @@
 import type React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getProductById, getSuggestedProducts } from '../../services/services';
+import { getProductsByCategory, getSuggestedProducts } from '../../services/services';
 import type { Product } from '../../types/Product';
 import styles from './ProductDetailsPage.module.scss';
 import type { ProductCategories } from '../../types/ProductCategories';
 import { Loader } from '../shared/components/Loader';
 import { ErrorLoading } from '../ProductPage/components/ErrorLoading';
-import { asset } from '../../helper';
-import { COLOR_MAP } from '../../constants/color-map';
 import { AddActions } from '../shared/components/AddActions';
 import { PRODUCT_SPECIFICATIONS, PRODUCT_SPECIFICATIONS_TECH } from '../../constants';
 import { Specifications } from '../shared/components/Specifications';
@@ -16,12 +14,18 @@ import { Prices } from '../shared/components/Prices';
 import { AboutProduct } from './components/AboutProduct/AboutProduct';
 import { CardSlider } from '../shared/components/CardSlider';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
+import { NotFoundProductPage } from './components/NotFoundProductPage';
+import { Gallery } from './components/Gallery/Gallery';
+import { ButtonBack } from '../shared/components/ButtonBack';
+import { ColorPanel } from './components/ColorPanel';
+import { CapacityPanel } from './components/CapacityPanel';
 
 export const ProductDetailsPage: React.FC = () => {
   const { id, category } = useParams<{ id: string; category: string }>();
   const navigate = useNavigate();
 
   const [product, setProduct] = useState<Product | null>(null);
+  const [categoryProducts, setCategoryProducts] = useState<Product[]>([]);
   const [suggestedProducts, setSuggestedProducts] = useState<Product[]>([]);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,17 +37,24 @@ export const ProductDetailsPage: React.FC = () => {
   const currentCategory = category as ProductCategories;
 
   const loadProduct = useCallback(() => {
-    if (!id) return;
+    if (!id || !currentCategory) return;
 
     setIsLoading(true);
     setHasError(false);
 
-    getProductById(id, currentCategory)
-      .then((data) => {
-        setProduct(data ?? null);
-        setSelectedImage(data?.images[0] || '');
-        setSelectedColor(data?.color || '');
-        setSelectedCapacity(data?.capacity || '');
+    getProductsByCategory(currentCategory)
+      .then((products) => {
+        setCategoryProducts(products);
+        const foundProduct = products.find((currProduct) => currProduct.id === id);
+
+        if (foundProduct) {
+          setProduct(foundProduct);
+          setSelectedImage(foundProduct.images[0] || '');
+          setSelectedColor(foundProduct.color || '');
+          setSelectedCapacity(foundProduct.capacity || '');
+        } else {
+          setProduct(null);
+        }
       })
       .catch(() => setHasError(true))
       .finally(() => setIsLoading(false));
@@ -57,19 +68,33 @@ export const ProductDetailsPage: React.FC = () => {
     getSuggestedProducts(10).then((data) => setSuggestedProducts(data));
   }, []);
 
+  const findProduct = (color: string, capacity: string): Product | undefined => {
+    if (!product) return undefined;
+
+    return categoryProducts.find(
+      (currProduct) =>
+        currProduct.namespaceId === product.namespaceId &&
+        currProduct.color.toLowerCase() === color.toLowerCase() &&
+        currProduct.capacity.toLowerCase() === capacity.toLowerCase(),
+    );
+  };
+
   const handleColorChange = (newColor: string) => {
     if (!product || newColor === selectedColor) return;
 
-    const newProductId = `${product.namespaceId}-${selectedCapacity.toLowerCase()}-${newColor}`;
-    console.log(newProductId);
-    navigate(`/${category}/${newProductId}`);
+    const targetProduct = findProduct(newColor, selectedCapacity);
+    if (targetProduct) {
+      navigate(`/${category}/${targetProduct.id}`);
+    }
   };
 
   const handleCapacityChange = (newCapacity: string) => {
     if (!product || newCapacity === selectedCapacity) return;
 
-    const newProductId = `${product.namespaceId}-${newCapacity.toLowerCase()}-${product.color}`;
-    navigate(`/${category}/${newProductId}`);
+    const targetProduct = findProduct(selectedColor, newCapacity);
+    if (targetProduct) {
+      navigate(`/${category}/${targetProduct.id}`);
+    }
   };
 
   if (isLoading) {
@@ -81,7 +106,7 @@ export const ProductDetailsPage: React.FC = () => {
   }
 
   if (!product) {
-    return <div>Product not found</div>;
+    return <NotFoundProductPage />;
   }
 
   const {
@@ -89,7 +114,6 @@ export const ProductDetailsPage: React.FC = () => {
     images = [],
     priceRegular,
     priceDiscount,
-    colorsAvailable = [],
     capacityAvailable = [],
     description = [],
   } = product;
@@ -101,82 +125,37 @@ export const ProductDetailsPage: React.FC = () => {
       <Breadcrumbs productName={product.name} />
 
       <div className={styles['product-details']}>
-        <button type="button" className={styles['back-link']} onClick={() => navigate(-1)}>
-          <img src={asset('img/arrow-primary.svg')} alt="Back" />
-          <span>Back</span>
-        </button>
+        <ButtonBack />
+
         <h1 className={styles['title']}>{name}</h1>
 
         <div className={styles['details-top']}>
           <div className={styles['details-top-left']}>
-            <div className={styles['gallery']}>
-              <div className={styles['main-image-container']}>
-                <img src={asset(currentImage)} alt={name} />
-              </div>
-              <div className={styles['thumb-list']}>
-                {images.map((imgUrl, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    className={`${styles['thumb-item']} ${
-                      currentImage === imgUrl ? styles['thumb-item--active'] : ''
-                    }`}
-                    onClick={() => setSelectedImage(imgUrl)}
-                  >
-                    <img src={asset(imgUrl)} alt={name} />
-                  </button>
-                ))}
-              </div>
-            </div>
+            <Gallery
+              images={images}
+              currentImage={currentImage}
+              setSelectedImage={setSelectedImage}
+            />
           </div>
 
           <div className={styles['details-top-right']}>
-            <div className={styles['colors-panel']}>
-              <span className={styles['label-text']}>Available colors</span>
-              <div className={styles['colors-row']}>
-                {colorsAvailable.map((color) => (
-                  <div key={color}>
-                    <input
-                      type="radio"
-                      name="color"
-                      id={color}
-                      value={color}
-                      checked={selectedColor === color}
-                      onChange={() => handleColorChange(color)}
-                    />
-                    <label className={styles['color-button']} htmlFor={color}>
-                      <span
-                        className={styles['color-circle']}
-                        style={{ backgroundColor: COLOR_MAP[color] }}
-                      ></span>
-                    </label>
-                  </div>
-                ))}
-              </div>
-              <span className={styles['product-id']}>ID: {product.id}</span>
-            </div>
+            <ColorPanel
+              product={product}
+              selectedColor={selectedColor}
+              selectedCapacity={selectedCapacity}
+              handleColorChange={handleColorChange}
+              findProduct={findProduct}
+            />
+
             <div className={styles['divider']} />
 
-            <div className={styles['capacity-panel']}>
-              <span className={styles['label-text']}>Select capacity</span>
-              <div className={styles['capacity-row']}>
-                {capacityAvailable.map((capacity) => (
-                  <div key={capacity}>
-                    <input
-                      type="radio"
-                      name="capacity"
-                      id={capacity}
-                      value={capacity}
-                      checked={selectedCapacity === capacity}
-                      onChange={() => handleCapacityChange(capacity)}
-                    />
-                    <label className={styles['capacity-button']} htmlFor={capacity}>
-                      <span className={styles['capacity-text']}>{capacity}</span>
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <CapacityPanel
+              selectedCapacity={selectedCapacity}
+              selectedColor={selectedColor}
+              capacityAvailable={capacityAvailable}
+              findProduct={findProduct}
+              handleCapacityChange={handleCapacityChange}
+            />
 
             <Prices
               priceDiscount={priceDiscount}

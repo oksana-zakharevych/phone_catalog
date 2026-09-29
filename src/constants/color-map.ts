@@ -16,4 +16,6 @@ export const COLOR_MAP: Record<string, string> = {
   sierrablue: '#9bb4ceff',
   blue: '#5a89a6ff',
   pink: '#fdd1d0ff',
+  coral: '#f9c6c6ff',
+  starlight: '#eae5d8ff',
 };
