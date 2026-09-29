@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const NavigationButton: React.FC<Props> = ({ isNavOpen, setIsNavOpen }) => {
-  const src = isNavOpen ? asset('/img/Close.svg') : asset('/img/Burger.svg');
+  const src = isNavOpen ? asset('/img/close.svg') : asset('/img/burger.svg');
 
   const handleClickBurger = () => {
     setIsNavOpen(!isNavOpen);

@@ -1,0 +1,314 @@
+$color-primary: #313237;
+$color-secondary: #89939a;
+$color-border: #e2e6e9;
+$color-border-dark: #b4bdc3;
+$color-bg-light: #fafbfc;
+$color-red: #e31b23;
+
+@import '../../variables.scss';
+@import '../../mixins.scss';
+
+.product-details {
+  margin: 24px auto 60px;
+
+  .back-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: none;
+    background: transparent;
+    color: $color-secondary;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    img {
+      transform: rotate(90deg);
+    }
+  }
+
+  .title {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin: 16px 0 32px;
+    color: $color-primary;
+
+    @include respond-to('tablet-sm') {
+      font-size: 32px;
+    }
+  }
+
+  .details-top {
+    @include respond-to('tablet-sm') {
+      display: flex;
+      gap: 20px;
+    }
+
+    @include respond-to('tablet-md') {
+      gap: 40px;
+    }
+
+    @include respond-to('desktop') {
+      gap: 64px;
+    }
+
+    .gallery {
+      @include respond-to('tablet-sm') {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+      }
+
+      @include respond-to('tablet-md') {
+        width: 420px;
+      }
+
+      @include respond-to('desktop') {
+        width: 560px;
+      }
+
+      .main-image-container {
+        width: 288px;
+        height: 288px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @include respond-to('tablet-md') {
+          width: 364px;
+          height: 364px;
+        }
+
+        @include respond-to('desktop') {
+          width: 464px;
+          height: 464px;
+        }
+      }
+
+      .thumb-list {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+
+        @include respond-to('tablet-sm') {
+          margin: 0;
+          flex-direction: column;
+          justify-content: flex-start;
+        }
+      }
+
+      .thumb-item {
+        width: 52px;
+        height: 52px;
+        padding: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $color-border;
+        background: $color-white;
+        cursor: pointer;
+        transition: border-color 0.2s ease-in;
+
+        &:hover {
+          border-color: $color-border-hover;
+        }
+
+        &--active {
+          border-color: $color-primary;
+        }
+
+        @include respond-to('tablet-sm') {
+          width: 35px;
+          height: 35px;
+        }
+
+        @include respond-to('tablet-md') {
+          width: 55px;
+          height: 55px;
+        }
+
+        @include respond-to('desktop') {
+          width: 80px;
+          height: 80px;
+        }
+      }
+    }
+
+    .details-top-right {
+      @include respond-to('tablet-sm') {
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .colors-panel {
+        margin-top: 40px;
+
+        @include respond-to('tablet-sm') {
+          margin: 0;
+        }
+
+        .label-text {
+          font-size: 12px;
+          color: $color-secondary;
+        }
+
+        .colors-row {
+          margin: 10px 0 8px;
+          display: flex;
+          gap: 8px;
+
+          .color-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid $color-border;
+            background: transparent;
+            padding: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.2s;
+
+            &:hover {
+              border-color: $color-border-hover;
+            }
+
+            .color-circle {
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+              display: block;
+            }
+          }
+
+          input {
+            display: none;
+
+            &:checked ~ .color-button {
+              border-color: $color-primary;
+            }
+          }
+        }
+
+        .product-id {
+          font-size: 10px;
+          line-height: 1;
+          max-width: 150px;
+          color: $color-icons;
+        }
+      }
+    }
+
+    .divider {
+      height: 1px;
+      margin: 24px 0;
+      background-color: $color-border;
+    }
+
+    .capacity-panel {
+      .label-text {
+        font-size: 12px;
+        color: $color-secondary;
+      }
+
+      .capacity-row {
+        margin-top: 8px;
+        display: flex;
+        gap: 8px;
+
+        .capacity-button {
+          height: 32px;
+          padding: 0 8px;
+          border: 1px solid $color-border;
+          background: transparent;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: border-color 0.2s;
+
+          &:hover {
+            border-color: $color-border-hover;
+          }
+        }
+
+        input {
+          display: none;
+
+          &:checked ~ .capacity-button {
+            border-color: $color-primary;
+            color: $color-white;
+            background-color: $color-primary;
+          }
+        }
+      }
+    }
+
+    .prices {
+      margin-top: 32px;
+      font-size: 32px;
+    }
+
+    .actions {
+      margin: 16px 0 32px;
+    }
+  }
+
+  .details-bottom {
+    padding-top: 56px;
+
+    @include respond-to('tablet-md') {
+      display: flex;
+      gap: 40px;
+    }
+
+    @include respond-to('desktop') {
+      gap: 64px;
+    }
+
+    .details-bottom-left {
+      @include respond-to('tablet-md') {
+        flex: 0 0 420px;
+      }
+
+      @include respond-to('desktop') {
+        flex: 0 0 560px;
+      }
+    }
+
+    .details-bottom-right {
+      padding-top: 30px;
+
+      @include respond-to('tablet-md') {
+        flex: 1 1 auto;
+        padding-top: 0;
+      }
+    }
+  }
+
+  .suggested-products {
+    margin-top: 45px;
+
+    @include respond-to('desktop') {
+      margin-top: 60px;
+    }
+  }
+
+  .specifications-panel {
+    .specifications {
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 400;
+    }
+  }
+}
