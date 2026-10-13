@@ -39,12 +39,7 @@ export const SearchField: React.FC = () => {
       />
 
       {search && (
-        <button
-          type="button"
-          className={styles['cancel-button']}
-          onClick={handleCancelSearch}
-          aria-label="Cancel search"
-        >
+        <button type="button" className={styles['cancel-button']} onClick={handleCancelSearch}>
           <img
             src={asset('img/close-secondary.svg')}
             className={styles['cancel-icon']}

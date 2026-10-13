@@ -5,6 +5,9 @@ import React, { useEffect } from 'react';
 import { NAV_ICONS, NAV_LINKS } from '../../constants';
 import { asset } from '../../helper';
 
+import { FavoritesBadge } from '../../modules/FavoritesPage/components/FavoritesBadge';
+import { CartBadge } from '../../modules/components/CartBadge';
+
 const getLinkClassName = (baseClass: string) => {
   return ({ isActive }: { isActive: boolean }) => {
     return classNames(styles[baseClass], { [styles.active]: isActive });
@@ -63,6 +66,8 @@ export const NavigationMobile: React.FC<Props> = ({ isNavOpen, setIsNavOpen }) =
               onClick={handleLinkClick}
             >
               <img src={asset(`/img/${icon.label}.svg`)} alt={`${icon.label}`} />
+              {icon.label === 'Cart' && <CartBadge />}
+              {icon.label === 'Favorites' && <FavoritesBadge />}
             </NavLink>
           </li>
         ))}

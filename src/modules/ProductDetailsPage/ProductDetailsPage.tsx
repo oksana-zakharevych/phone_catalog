@@ -13,7 +13,7 @@ import { Specifications } from '../shared/components/Specifications';
 import { Prices } from '../shared/components/Prices';
 import { AboutProduct } from './components/AboutProduct/AboutProduct';
 import { CardSlider } from '../shared/components/CardSlider';
-import { Breadcrumbs } from '../../components/Breadcrumbs';
+import { Breadcrumbs } from '../shared/components/Breadcrumbs';
 import { NotFoundProductPage } from './components/NotFoundProductPage';
 import { Gallery } from './components/Gallery/Gallery';
 import { ButtonBack } from '../shared/components/ButtonBack';
@@ -162,7 +162,7 @@ export const ProductDetailsPage: React.FC = () => {
               priceRegular={priceRegular}
               classname={styles.prices}
             />
-            <AddActions classname={styles.actions} />
+            <AddActions product={product} classname={styles.actions} />
             <Specifications list={PRODUCT_SPECIFICATIONS} product={product} />
           </div>
         </div>

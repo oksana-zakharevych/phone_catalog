@@ -36,7 +36,7 @@ export const ProductCard: React.FC<Props> = ({ product, classname }) => {
         classnames={{ specificationsPanel: styles['specifications-panel'] }}
       />
 
-      <AddActions />
+      <AddActions product={product} />
     </div>
   );
 };
