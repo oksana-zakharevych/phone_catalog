@@ -11,6 +11,17 @@
 .add-button {
   @include button-base();
   flex: 1;
+
+  &.added {
+    background-color: $color-white;
+    color: #27ae60;
+    border: 1px solid $color-border;
+    cursor: default;
+
+    &:hover {
+      background-color: $color-white;
+    }
+  }
 }
 
 .favorite-button {

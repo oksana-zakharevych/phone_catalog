@@ -20,7 +20,7 @@ import {
 } from '../../constants';
 import type { ProductCategories } from '../../types/ProductCategories.ts';
 import { updateSearchParams } from '../../helper.ts';
-import { Breadcrumbs } from '../../components/Breadcrumbs/Breadcrumbs.tsx';
+import { Breadcrumbs } from '../shared/components/Breadcrumbs';
 
 export const ProductPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);

@@ -4,6 +4,8 @@ import styles from './Navigation.module.scss';
 import { NAV_ICONS, NAV_LINKS } from '../../constants';
 import type React from 'react';
 import { asset } from '../../helper';
+import { CartBadge } from '../../modules/components/CartBadge';
+import { FavoritesBadge } from '../../modules/FavoritesPage/components/FavoritesBadge';
 
 const getLinkClassName = (baseClass: string) => {
   return ({ isActive }: { isActive: boolean }) => {
@@ -28,6 +30,8 @@ export const Navigation: React.FC = () => {
           <li className={styles['nav-icon-wrapper']} key={icon.label}>
             <NavLink to={icon.to} className={getLinkClassName('nav-icon')}>
               <img src={asset(`/img/${icon.label}.svg`)} alt={`${icon.label}`} />
+              {icon.label === 'Cart' && <CartBadge />}
+              {icon.label === 'Favorites' && <FavoritesBadge />}
             </NavLink>
           </li>
         ))}
