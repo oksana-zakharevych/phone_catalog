@@ -34,9 +34,9 @@ export const AddActions: React.FC<Props> = ({ product, classname }) => {
         }
       >
         {addedToFavorites ? (
-          <img src={asset('/img/favorites-red.svg')} />
+          <img src={asset('/img/favorites-red.svg')} alt="Added to favorites" />
         ) : (
-          <img src={asset('/img/favorites.svg')} />
+          <img src={asset('/img/favorites.svg')} alt="Not added to favorites" />
         )}
       </button>
     </div>
