@@ -55,7 +55,6 @@ export const BannerSlider: React.FC = () => {
             <button
               type="button"
               className={classNames(styles.arrow, styles['arrow-prev'])}
-              aria-label="Previous slide"
               onClick={() => swiper?.slidePrev()}
             >
               <img src={asset('img/arrow-primary.svg')} alt="" />
@@ -63,7 +62,6 @@ export const BannerSlider: React.FC = () => {
             <button
               type="button"
               className={classNames(styles.arrow, styles['arrow-next'])}
-              aria-label="Next slide"
               onClick={() => swiper?.slideNext()}
             >
               <img src={asset('img/arrow-primary.svg')} alt="" />
@@ -79,7 +77,6 @@ export const BannerSlider: React.FC = () => {
               key={slide.title}
               type="button"
               className={classNames(styles.dot, { [styles['dot-active']]: index === activeIndex })}
-              aria-label={`Go to slide ${index + 1}`}
               onClick={() => swiper?.slideToLoop(index)}
             />
           ))}

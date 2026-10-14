@@ -32,7 +32,6 @@ export const CardSlider: React.FC<Props> = ({ products, title }) => {
           <button
             type="button"
             className={classNames(styles.arrow, styles['arrow-prev'])}
-            aria-label="Previous products"
             disabled={isBeginning}
             onClick={() => swiper?.slidePrev()}
           >
@@ -41,7 +40,6 @@ export const CardSlider: React.FC<Props> = ({ products, title }) => {
           <button
             type="button"
             className={classNames(styles.arrow, styles['arrow-next'])}
-            aria-label="Next products"
             disabled={isEnd}
             onClick={() => swiper?.slideNext()}
           >

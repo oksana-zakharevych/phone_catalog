@@ -5,15 +5,21 @@ import { useEffect, useState } from 'react';
 import type { Product } from '../../types/Product';
 import { getAllProducts } from '../../services/services';
 import { Categories } from './components/Categories';
+import { Loader } from '../shared/components/Loader';
+import { ErrorLoading } from '../ProductPage/components/ErrorLoading';
 
 export const HomePage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
+
     getAllProducts()
       .then((result) => setProducts(result))
-      .catch(() => {})
-      .finally(() => {});
+      .catch(() => setHasError(true))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const sortedByYearProducts = [...products].sort((product1, product2) => {
@@ -27,6 +33,14 @@ export const HomePage: React.FC = () => {
     const delta2 = product2.priceRegular - product2.priceDiscount;
     return delta2 - delta1;
   });
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (hasError) {
+    return <ErrorLoading />;
+  }
 
   return (
     <>

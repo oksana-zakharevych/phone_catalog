@@ -8,7 +8,7 @@ type Props = {
   name: string;
   url: string;
   color: string;
-  quantity: number | null;
+  quantity: number;
 };
 
 export const Category: React.FC<Props> = ({ imageUrl, name, url, color, quantity }) => {

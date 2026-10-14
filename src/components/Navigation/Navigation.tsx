@@ -4,7 +4,7 @@ import styles from './Navigation.module.scss';
 import { NAV_ICONS, NAV_LINKS } from '../../constants';
 import type React from 'react';
 import { asset } from '../../helper';
-import { CartBadge } from '../../modules/components/CartBadge';
+import { CartBadge } from '../../modules/CartPage/components/CartBadge';
 import { FavoritesBadge } from '../../modules/FavoritesPage/components/FavoritesBadge';
 
 const getLinkClassName = (baseClass: string) => {

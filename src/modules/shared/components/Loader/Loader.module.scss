@@ -7,6 +7,10 @@
   top: 35%;
   left: 50%;
   transform: translateX(-50%);
+
+  @include respond-to('tablet-md') {
+    top: 40%;
+  }
 }
 
 .spinner {

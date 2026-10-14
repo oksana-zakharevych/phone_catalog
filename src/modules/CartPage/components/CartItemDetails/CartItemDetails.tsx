@@ -1,6 +1,6 @@
 import type React from 'react';
-import { asset } from '../../../helper';
-import type { CartItem } from '../../../types/CartItem';
+import { asset } from '../../../../helper';
+import type { CartItem } from '../../../../types/CartItem';
 import styles from './CartItemDetails.module.scss';
 
 type Props = {
