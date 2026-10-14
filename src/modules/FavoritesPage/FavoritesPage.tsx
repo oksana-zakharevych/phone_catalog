@@ -19,7 +19,7 @@ export const FavoritesPage: React.FC = () => {
 
       {items.length === 0 ? (
         <div className={styles.empty}>
-          <img src={asset('img/empty-favorites.jpeg')} alt="" />
+          <img src={asset('img/empty-favorites.jpeg')} alt="Empty page" />
         </div>
       ) : (
         <ul className={styles.list}>

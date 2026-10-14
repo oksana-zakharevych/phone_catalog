@@ -4,7 +4,7 @@ import styles from './Navigation.module.scss';
 import { NAV_ICONS, NAV_LINKS } from '../../constants';
 import type React from 'react';
 import { asset } from '../../helper';
-import { CartBadge } from '../../modules/components/CartBadge';
+import { CartBadge } from '../../modules/CartPage/components/CartBadge';
 import { FavoritesBadge } from '../../modules/FavoritesPage/components/FavoritesBadge';
 
 const getLinkClassName = (baseClass: string) => {
@@ -29,7 +29,7 @@ export const Navigation: React.FC = () => {
         {NAV_ICONS.map((icon) => (
           <li className={styles['nav-icon-wrapper']} key={icon.label}>
             <NavLink to={icon.to} className={getLinkClassName('nav-icon')}>
-              <img src={asset(`/img/${icon.label}.svg`)} alt={`${icon.label}`} />
+              <img src={asset(`/img/${icon.label.toLowerCase()}.svg`)} alt={`${icon.label}`} />
               {icon.label === 'Cart' && <CartBadge />}
               {icon.label === 'Favorites' && <FavoritesBadge />}
             </NavLink>

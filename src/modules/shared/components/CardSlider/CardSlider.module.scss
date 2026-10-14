@@ -1,58 +1,85 @@
 @import '../../../../variables.scss';
 @import '../../../../mixins.scss';
 
+.section {
+  margin-bottom: 56px;
+
+  @include respond-to('tablet-sm') {
+    margin-bottom: 64px;
+  }
+}
+
+.header {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  @include respond-to('tablet-sm') {
+    margin-bottom: 32px;
+  }
+}
+
 .title {
   font-size: 22px;
-  font-weight: 700;
-  line-height: 1;
-  position: relative;
-  top: 30px;
+  font-weight: 800;
+  line-height: 1.25;
 
   @include respond-to('tablet-sm') {
     font-size: 32px;
   }
 }
 
+.controls {
+  display: flex;
+  gap: 16px;
+}
+
+.arrow {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $color-border-focus;
+  background-color: $color-white;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $color-primary;
+    background-color: $color-border;
+  }
+
+  &:disabled {
+    border-color: $color-border;
+    cursor: not-allowed;
+
+    img {
+      opacity: 0.3;
+    }
+  }
+}
+
+.arrow-prev img {
+  transform: rotate(90deg);
+}
+
+.arrow-next img {
+  transform: rotate(-90deg);
+}
+
 .card-slider {
-  padding-top: 48px;
-  position: relative;
-
-  :global {
-    .swiper-slide {
-      height: auto;
-      display: flex;
-    }
-
-    .swiper-button-prev,
-    .swiper-button-next {
-      width: 32px;
-      height: 32px;
-      border: 1px solid $color-secondary;
-      background-color: $color-white;
-      color: $color-primary;
-      position: absolute;
-      top: 0;
-      margin-top: 0;
-
-      svg {
-        width: 8px;
-      }
-
-      &.swiper-button-disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-    }
-
-    .swiper-button-prev {
-      right: 48px;
-      left: auto;
-    }
-
-    .swiper-button-next {
-      right: 0;
-      left: auto;
-    }
+  :global(.swiper-slide) {
+    height: auto;
+    display: flex;
   }
 
   .slide-content {

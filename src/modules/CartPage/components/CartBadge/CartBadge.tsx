@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useCart } from '../../../context/CartContext';
+import { useCart } from '../../../../context/CartContext';
 import styles from './CartBadge.module.scss';
 
 export const CartBadge: React.FC = () => {

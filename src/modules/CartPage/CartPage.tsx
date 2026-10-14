@@ -2,7 +2,7 @@ import type React from 'react';
 import { asset } from '../../helper';
 import { useCart } from '../../context/CartContext';
 import { ButtonBack } from '../shared/components/ButtonBack';
-import { CartItemDetails } from './CartItemDetails';
+import { CartItemDetails } from './components/CartItemDetails';
 import styles from './CartPage.module.scss';
 
 export const CartPage: React.FC = () => {
