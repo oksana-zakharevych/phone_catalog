@@ -6,27 +6,30 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import globals from 'globals';
 
 export default [
   js.configs.recommended,
   eslintConfigPrettier,
+  {
+    ignores: ['dist', 'eslint.config.js', 'vite.config.ts'],
+  },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
         ecmaVersion: 12,
-        project: './tsconfig.json',
+        projectService: {
+          allowDefaultProject: ['*.js', '*.ts'],
+        },
+        projectService: true,
         sourceType: 'module',
         ecmaFeatures: {
           jsx: true,
         },
       },
-      globals: {
-        browser: 'readonly',
-        window: 'readonly',
-        document: 'readonly',
-      },
+      globals: { ...globals.browser, ...globals.es2021 },
     },
     plugins: {
       react,
@@ -38,6 +41,7 @@ export default [
     rules: {
       ...typescriptEslint.configs.recommended.rules,
       ...react.configs.recommended.rules,
+      'react/react-in-jsx-scope': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       'prettier/prettier': 'error',
